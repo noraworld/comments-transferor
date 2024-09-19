@@ -1,8 +1,9 @@
 'use strict'
 
-const { Octokit } = await import('@octokit/rest')
-const fs = require('fs')
-const { execSync } = require('child_process')
+import { Octokit } from '@octokit/rest'
+import fs from 'fs'
+import { execSync } from 'child_process'
+
 const tmpFile = 'tmp.md'
 const spiltCommentsCheckAttemptsMaximum = 5
 

@@ -1,6 +1,6 @@
 'use strict'
 
-const { Octokit } = require('@octokit/rest')
+const { Octokit } = await import('@octokit/rest')
 const fs = require('fs')
 const { execSync } = require('child_process')
 const tmpFile = 'tmp.md'

@@ -99,9 +99,10 @@ async function deleteComment(commentID) {
 }
 
 function buildCommentBody(commentBody) {
-  commentBody = process.env.REPLACE_TWITTER_SHORT_URL ? replaceTwitterShortURL(commentBody) : commentBody
-  commentBody = process.env.TRIM_EMPTY_IMAGE_TAG      ?      trimEmptyImageTag(commentBody) : commentBody
-  commentBody = process.env.LINKIFY_HASHTAGS          ?        linkifyHashtags(commentBody) : commentBody
+  commentBody = process.env.REPLACE_TWITTER_SHORT_URL        ?      replaceTwitterShortURL(commentBody) : commentBody
+  commentBody = process.env.TRIM_EMPTY_IMAGE_TAG             ?           trimEmptyImageTag(commentBody) : commentBody
+  commentBody = process.env.LINKIFY_HASHTAGS                 ?             linkifyHashtags(commentBody) : commentBody
+  commentBody = process.env.MOVE_TRAILING_URLS_TO_NEXT_LINES ? moveTrailingUrlsToNextLines(commentBody) : commentBody
 
   return commentBody
 }
@@ -134,6 +135,19 @@ function linkifyHashtags(commentBody) {
     default:
       return commentBody
   }
+}
+
+function moveTrailingUrlsToNextLines(commentBody) {
+  const regex = /(.*?)(\s*)(https?:\/\/[^\s)]+)$/gm
+
+  return commentBody.replace(regex, (_match, textBeforeUrl, _space, url) => {
+    if (/https?:\/\/(twitter\.com|x\.com)\/[a-zA-Z0-9_]+\/status\/\d+\/photo\/\d+/.test(url)) {
+      return `${textBeforeUrl.trim()}\n\n[Attachment files from Twitter](${url})`
+    }
+    else {
+      return `${textBeforeUrl.trim()}\n\n${url}`
+    }
+  })
 }
 
 run().catch((error) => {

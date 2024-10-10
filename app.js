@@ -99,10 +99,11 @@ async function deleteComment(commentID) {
 }
 
 function buildCommentBody(commentBody) {
-  commentBody = process.env.REPLACE_TWITTER_SHORT_URL        ?      replaceTwitterShortURL(commentBody) : commentBody
-  commentBody = process.env.TRIM_EMPTY_IMAGE_TAG             ?           trimEmptyImageTag(commentBody) : commentBody
-  commentBody = process.env.LINKIFY_HASHTAGS                 ?             linkifyHashtags(commentBody) : commentBody
-  commentBody = process.env.MOVE_TRAILING_URLS_TO_NEXT_LINES ? moveTrailingUrlsToNextLines(commentBody) : commentBody
+  commentBody = process.env.REPLACE_TWITTER_SHORT_URL                ?               replaceTwitterShortURL(commentBody) : commentBody
+  commentBody = process.env.TRIM_EMPTY_IMAGE_TAG                     ?                    trimEmptyImageTag(commentBody) : commentBody
+  commentBody = process.env.LINKIFY_HASHTAGS                         ?                      linkifyHashtags(commentBody) : commentBody
+  commentBody = process.env.MOVE_TRAILING_URLS_TO_NEXT_LINES         ?          moveTrailingUrlsToNextLines(commentBody) : commentBody
+  commentBody = process.env.REMOVE_SPACES_AFTER_JAPANESE_PUNCTUATION ? removeSpacesAfterJapanesePunctuation(commentBody) : commentBody
 
   return commentBody
 }
@@ -147,6 +148,14 @@ function moveTrailingUrlsToNextLines(commentBody) {
     else {
       return `${textBeforeUrl.trim()}\n\n${url}`
     }
+  })
+}
+
+function removeSpacesAfterJapanesePunctuation(commentBody) {
+  const regex = /(。)(\s(?!\r|\n))+/g
+
+  return commentBody.replace(regex, (_, japanesePunctuation) => {
+    return japanesePunctuation
   })
 }
 

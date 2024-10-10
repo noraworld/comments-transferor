@@ -34,6 +34,10 @@ inputs:
     description: Specify whether the trailing urls are moved to the next lines
     required: false
     default: ""
+  remove_spaces_after_japanese_punctuation:
+    description: Specify whether the spaces after Japanese punctuation are removed
+    required: false
+    default: ""
 
 runs:
   using: "composite"
@@ -50,13 +54,14 @@ runs:
       run: node $GITHUB_ACTION_PATH/app.js
       shell: sh
       env:
-        GITHUB_TOKEN:                     ${{ github.token }}
-        ISSUE_NUMBER:                     ${{ github.event.issue.number }}
-        GITHUB_ACTION_PATH:               ${{ github.action_path }}
-        TARGET_ISSUE_REPO:                ${{ inputs.target_issue_repo }}
-        TARGET_ISSUE_NUMBER:              ${{ inputs.target_issue_number }}
-        PERSONAL_ACCESS_TOKEN:            ${{ inputs.personal_access_token }}
-        REPLACE_TWITTER_SHORT_URL:        ${{ inputs.replace_twitter_short_url }}
-        TRIM_EMPTY_IMAGE_TAG:             ${{ inputs.trim_empty_image_tag }}
-        LINKIFY_HASHTAGS:                 ${{ inputs.linkify_hashtags }}
-        MOVE_TRAILING_URLS_TO_NEXT_LINES: ${{ inputs.move_trailing_urls_to_next_lines }}
+        GITHUB_TOKEN:                             ${{ github.token }}
+        ISSUE_NUMBER:                             ${{ github.event.issue.number }}
+        GITHUB_ACTION_PATH:                       ${{ github.action_path }}
+        TARGET_ISSUE_REPO:                        ${{ inputs.target_issue_repo }}
+        TARGET_ISSUE_NUMBER:                      ${{ inputs.target_issue_number }}
+        PERSONAL_ACCESS_TOKEN:                    ${{ inputs.personal_access_token }}
+        REPLACE_TWITTER_SHORT_URL:                ${{ inputs.replace_twitter_short_url }}
+        TRIM_EMPTY_IMAGE_TAG:                     ${{ inputs.trim_empty_image_tag }}
+        LINKIFY_HASHTAGS:                         ${{ inputs.linkify_hashtags }}
+        MOVE_TRAILING_URLS_TO_NEXT_LINES:         ${{ inputs.move_trailing_urls_to_next_lines }}
+        REMOVE_SPACES_AFTER_JAPANESE_PUNCTUATION: ${{ inputs.remove_spaces_after_japanese_punctuation }}

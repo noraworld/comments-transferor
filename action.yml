@@ -26,6 +26,10 @@ inputs:
     description: Specify whether the markdown-styled empty image tags are trimmed
     required: false
     default: ""
+  linkify_hashtags:
+    description: Specify whether the hashtags are turned into the links
+    required: false
+    default: ""
 
 runs:
   using: "composite"
@@ -50,3 +54,4 @@ runs:
         PERSONAL_ACCESS_TOKEN:     ${{ inputs.personal_access_token }}
         REPLACE_TWITTER_SHORT_URL: ${{ inputs.replace_twitter_short_url }}
         TRIM_EMPTY_IMAGE_TAG:      ${{ inputs.trim_empty_image_tag }}
+        LINKIFY_HASHTAGS:          ${{ inputs.linkify_hashtags }}

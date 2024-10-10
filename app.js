@@ -101,8 +101,16 @@ async function deleteComment(commentID) {
 function buildCommentBody(commentBody) {
   commentBody = process.env.REPLACE_TWITTER_SHORT_URL ? replaceTwitterShortURL(commentBody) : commentBody
   commentBody = process.env.TRIM_EMPTY_IMAGE_TAG      ?      trimEmptyImageTag(commentBody) : commentBody
+  commentBody = process.env.LINKIFY_HASHTAGS          ?        linkifyHashtags(commentBody) : commentBody
 
   return commentBody
+}
+
+function getServiceName(commentBody) {
+  // TODO: Mastodon
+  const fromTwitterRegex = /From \[Twitter\]\(https:\/\/(twitter\.com|x\.com)\/[a-zA-Z0-9_]+\/status\/\d+\)\n?$/
+
+  if (fromTwitterRegex.test(commentBody)) return 'twitter'
 }
 
 function replaceTwitterShortURL(commentBody) {
@@ -114,6 +122,18 @@ function replaceTwitterShortURL(commentBody) {
 
 function trimEmptyImageTag(commentBody) {
   return commentBody.replaceAll(/\!\[\]\(\)(\n\n)?/g, '')
+}
+
+function linkifyHashtags(commentBody) {
+  switch (getServiceName(commentBody)) {
+    case 'twitter':
+      return commentBody.replace(/#(\S+)/g, (_, tag) => {
+        const encodedTag = encodeURIComponent(tag)
+        return `[#${tag}](https://twitter.com/hashtag/${encodedTag})`
+      })
+    default:
+      return commentBody
+  }
 }
 
 run().catch((error) => {

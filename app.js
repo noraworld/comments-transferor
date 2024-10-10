@@ -144,7 +144,7 @@ function linkifyMentions(commentBody) {
     case 'twitter':
       return commentBody.replace(/@(\S+)/g, (_, mention) => {
         const encodedMention = encodeURIComponent(mention)
-        return `[#${mention}](https://twitter.com/${encodedMention})`
+        return `[@${mention}](https://twitter.com/${encodedMention})`
       })
     default:
       return commentBody

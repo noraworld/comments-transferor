@@ -30,6 +30,10 @@ inputs:
     description: Specify whether the hashtags are turned into the links
     required: false
     default: ""
+  linkify_mentions:
+    description: Specify whether the mentions are turned into the links
+    required: false
+    default: ""
   move_trailing_urls_to_next_lines:
     description: Specify whether the trailing urls are moved to the next lines
     required: false
@@ -63,5 +67,6 @@ runs:
         REPLACE_TWITTER_SHORT_URL:                ${{ inputs.replace_twitter_short_url }}
         TRIM_EMPTY_IMAGE_TAG:                     ${{ inputs.trim_empty_image_tag }}
         LINKIFY_HASHTAGS:                         ${{ inputs.linkify_hashtags }}
+        LINKIFY_MENTIONS:                         ${{ inputs.linkify_mentions }}
         MOVE_TRAILING_URLS_TO_NEXT_LINES:         ${{ inputs.move_trailing_urls_to_next_lines }}
         REMOVE_SPACES_AFTER_JAPANESE_PUNCTUATION: ${{ inputs.remove_spaces_after_japanese_punctuation }}

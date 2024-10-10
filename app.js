@@ -102,6 +102,7 @@ function buildCommentBody(commentBody) {
   commentBody = process.env.REPLACE_TWITTER_SHORT_URL                ?               replaceTwitterShortURL(commentBody) : commentBody
   commentBody = process.env.TRIM_EMPTY_IMAGE_TAG                     ?                    trimEmptyImageTag(commentBody) : commentBody
   commentBody = process.env.LINKIFY_HASHTAGS                         ?                      linkifyHashtags(commentBody) : commentBody
+  commentBody = process.env.LINKIFY_MENTIONS                         ?                      linkifyMentions(commentBody) : commentBody
   commentBody = process.env.MOVE_TRAILING_URLS_TO_NEXT_LINES         ?          moveTrailingUrlsToNextLines(commentBody) : commentBody
   commentBody = process.env.REMOVE_SPACES_AFTER_JAPANESE_PUNCTUATION ? removeSpacesAfterJapanesePunctuation(commentBody) : commentBody
 
@@ -132,6 +133,18 @@ function linkifyHashtags(commentBody) {
       return commentBody.replace(/#(\S+)/g, (_, tag) => {
         const encodedTag = encodeURIComponent(tag)
         return `[#${tag}](https://twitter.com/hashtag/${encodedTag})`
+      })
+    default:
+      return commentBody
+  }
+}
+
+function linkifyMentions(commentBody) {
+  switch (getServiceName(commentBody)) {
+    case 'twitter':
+      return commentBody.replace(/@(\S+)/g, (_, mention) => {
+        const encodedMention = encodeURIComponent(mention)
+        return `[#${mention}](https://twitter.com/${encodedMention})`
       })
     default:
       return commentBody

@@ -119,7 +119,7 @@ function getServiceName(commentBody) {
 function replaceTwitterShortURL(commentBody) {
   return commentBody.replaceAll(/https\:\/\/t\.co\/[a-zA-Z0-9]*/g, match => {
     // HTTP modules like axios are hard to use because await can't be used here.
-    return execSync(`curl -Ls -o /dev/null -w "%{url_effective}" "${match}"`)
+    return execSync(`curl -Ls -o /dev/null -w "%{url_effective}" "${match}" || true`)
   })
 }
 

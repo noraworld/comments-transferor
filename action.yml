@@ -46,6 +46,10 @@ inputs:
     description: Specify whether the Misskey profile icon URL is removed
     required: false
     default: ""
+  replace_misskey_image_url_with_multiple_ones:
+    description: Specify whether to retrieve multiple images and replace the URL with multiple ones
+    required: false
+    default: ""
 
 runs:
   using: "composite"
@@ -62,16 +66,17 @@ runs:
       run: node $GITHUB_ACTION_PATH/app.js
       shell: sh
       env:
-        GITHUB_TOKEN:                             ${{ github.token }}
-        ISSUE_NUMBER:                             ${{ github.event.issue.number }}
-        GITHUB_ACTION_PATH:                       ${{ github.action_path }}
-        TARGET_ISSUE_REPO:                        ${{ inputs.target_issue_repo }}
-        TARGET_ISSUE_NUMBER:                      ${{ inputs.target_issue_number }}
-        PERSONAL_ACCESS_TOKEN:                    ${{ inputs.personal_access_token }}
-        REPLACE_TWITTER_SHORT_URL:                ${{ inputs.replace_twitter_short_url }}
-        TRIM_EMPTY_IMAGE_TAG:                     ${{ inputs.trim_empty_image_tag }}
-        LINKIFY_HASHTAGS:                         ${{ inputs.linkify_hashtags }}
-        LINKIFY_MENTIONS:                         ${{ inputs.linkify_mentions }}
-        MOVE_TRAILING_URLS_TO_NEXT_LINES:         ${{ inputs.move_trailing_urls_to_next_lines }}
-        REMOVE_SPACES_AFTER_JAPANESE_PUNCTUATION: ${{ inputs.remove_spaces_after_japanese_punctuation }}
-        TRIM_MISSKEY_PROFILE_ICON_URL:            ${{ inputs.trim_misskey_profile_icon_url }}
+        GITHUB_TOKEN:                                 ${{ github.token }}
+        ISSUE_NUMBER:                                 ${{ github.event.issue.number }}
+        GITHUB_ACTION_PATH:                           ${{ github.action_path }}
+        TARGET_ISSUE_REPO:                            ${{ inputs.target_issue_repo }}
+        TARGET_ISSUE_NUMBER:                          ${{ inputs.target_issue_number }}
+        PERSONAL_ACCESS_TOKEN:                        ${{ inputs.personal_access_token }}
+        REPLACE_TWITTER_SHORT_URL:                    ${{ inputs.replace_twitter_short_url }}
+        TRIM_EMPTY_IMAGE_TAG:                         ${{ inputs.trim_empty_image_tag }}
+        LINKIFY_HASHTAGS:                             ${{ inputs.linkify_hashtags }}
+        LINKIFY_MENTIONS:                             ${{ inputs.linkify_mentions }}
+        MOVE_TRAILING_URLS_TO_NEXT_LINES:             ${{ inputs.move_trailing_urls_to_next_lines }}
+        REMOVE_SPACES_AFTER_JAPANESE_PUNCTUATION:     ${{ inputs.remove_spaces_after_japanese_punctuation }}
+        TRIM_MISSKEY_PROFILE_ICON_URL:                ${{ inputs.trim_misskey_profile_icon_url }}
+        REPLACE_MISSKEY_IMAGE_URL_WITH_MULTIPLE_ONES: ${{ inputs.replace_misskey_image_url_with_multiple_ones }}

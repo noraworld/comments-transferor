@@ -42,6 +42,10 @@ inputs:
     description: Specify whether the spaces after Japanese punctuation are removed
     required: false
     default: ""
+  trim_misskey_profile_icon_url:
+    description: Specify whether the Misskey profile icon URL is removed
+    required: false
+    default: ""
 
 runs:
   using: "composite"
@@ -70,3 +74,4 @@ runs:
         LINKIFY_MENTIONS:                         ${{ inputs.linkify_mentions }}
         MOVE_TRAILING_URLS_TO_NEXT_LINES:         ${{ inputs.move_trailing_urls_to_next_lines }}
         REMOVE_SPACES_AFTER_JAPANESE_PUNCTUATION: ${{ inputs.remove_spaces_after_japanese_punctuation }}
+        TRIM_MISSKEY_PROFILE_ICON_URL:            ${{ inputs.trim_misskey_profile_icon_url }}

@@ -31,6 +31,7 @@ jobs:
           linkify_mentions: true
           move_trailing_urls_to_next_lines: true
           remove_spaces_after_japanese_punctuation: true
+          trim_misskey_profile_icon_url: true
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
 ```
@@ -49,5 +50,6 @@ Some online services have a limit specifying the issue where you want to make it
 | `linkify_mentions`                         | Specify whether the mentions are turned into the links                   | `true`                       | Boolean | `false`  |
 | `move_trailing_urls_to_next_lines`         | Specify whether the trailing urls are moved to the next lines            | `true`                       | Boolean | `false`  |
 | `remove_spaces_after_japanese_punctuation` | Specify whether the spaces after Japanese punctuation are removed        | `true`                       | Boolean | `false`  |
+| `trim_misskey_profile_icon_url`            | Specify whether the Misskey profile icon URL is removed                  | `true`                       | Boolean | `false`  |
 
 [^target_issue_number]: You can use the special character `latest` to specify the latest issue on a repository you select.

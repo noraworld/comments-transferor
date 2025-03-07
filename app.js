@@ -105,6 +105,7 @@ function buildCommentBody(commentBody) {
   commentBody = process.env.LINKIFY_MENTIONS                         ?                      linkifyMentions(commentBody) : commentBody
   commentBody = process.env.MOVE_TRAILING_URLS_TO_NEXT_LINES         ?          moveTrailingUrlsToNextLines(commentBody) : commentBody
   commentBody = process.env.REMOVE_SPACES_AFTER_JAPANESE_PUNCTUATION ? removeSpacesAfterJapanesePunctuation(commentBody) : commentBody
+  commentBody = process.env.TRIM_MISSKEY_PROFILE_ICON_URL            ?            trimMisskeyProfileIconUrl(commentBody) : commentBody
 
   return commentBody
 }
@@ -121,6 +122,10 @@ function replaceTwitterShortURL(commentBody) {
     // HTTP modules like axios are hard to use because await can't be used here.
     return execSync(`curl -Ls -o /dev/null -w "%{url_effective}" "${match}" || true`)
   })
+}
+
+function trimMisskeyProfileIconUrl(commentBody) {
+  return commentBody.replaceAll(/\!\[.*?\]\(https:\/\/proxy\.misskeyusercontent\.jp\/avatar\.webp.*?\)(\n\n)?/g, '')
 }
 
 function trimEmptyImageTag(commentBody) {

@@ -22,6 +22,10 @@ async function run() {
       console.error(`The action was run ${attempt} times, but the comments still exist.`)
       process.exit(1)
     }
+    else if (process.env.DRY_RUN === 'true') {
+      console.error('The action is supposed to be performed until all the comments are transferred, but it is done only once because dry run is enabled.')
+      process.exit(0)
+    }
   }
 }
 
@@ -72,8 +76,14 @@ async function transferComments(comments) {
       commentBody = buildCommentBody(commentBody)
 
       fs.writeFileSync(tmpFile, commentBody)
-      execSync(`gh issue comment --repo "${targetIssueRepo}" "${targetIssueNumber}" --body-file "${tmpFile}"`)
-      await deleteComment(comment.id)
+
+      if (process.env.DRY_RUN !== 'true') {
+        execSync(`gh issue comment --repo "${targetIssueRepo}" "${targetIssueNumber}" --body-file "${tmpFile}"`)
+        await deleteComment(comment.id)
+      }
+      else {
+        console.info(commentBody)
+      }
     }
     catch (error) {
       console.error(error)

@@ -53,3 +53,9 @@ Some online services have a limit specifying the issue where you want to make it
 | `trim_misskey_profile_icon_url`            | Specify whether the Misskey profile icon URL is removed                  | `true`                       | Boolean | `false`  |
 
 [^target_issue_number]: You can use the special character `latest` to specify the latest issue on a repository you select.
+
+## Development
+```shell
+cp -i .env.sample .env
+node --env-file=.env app.js
+```

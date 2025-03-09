@@ -33,7 +33,7 @@ async function getComments() {
   const octokit = process.env.PERSONAL_ACCESS_TOKEN ?
                   new Octokit({ auth: process.env[process.env.PERSONAL_ACCESS_TOKEN] }) :
                   new Octokit({ auth: process.env.GITHUB_TOKEN })
-  const repository = process.env.GITHUB_REPOSITORY
+  const repository = process.env.ISSUE_REPO
   const [ owner, repo ] = repository.split('/')
   const issueNumber = process.env.ISSUE_NUMBER
 
@@ -98,7 +98,7 @@ async function deleteComment(commentID) {
   const octokit = process.env.PERSONAL_ACCESS_TOKEN ?
                   new Octokit({ auth: process.env[process.env.PERSONAL_ACCESS_TOKEN] }) :
                   new Octokit({ auth: process.env.GITHUB_TOKEN })
-  const repository = process.env.GITHUB_REPOSITORY
+  const repository = process.env.ISSUE_REPO
   const [ owner, repo ] = repository.split('/')
 
   await octokit.issues.deleteComment({

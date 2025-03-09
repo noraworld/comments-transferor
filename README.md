@@ -42,6 +42,8 @@ Some online services have a limit specifying the issue where you want to make it
 ### Options
 | Key                                            | Description                                                                        | Example                      | Type    | Required |
 | ---------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------- | ------- | -------- |
+| `issue_repo`                                   | Select a repository with a username whose issue you want to transfer from          | `username/reponame`          | String  | `false`  |
+| `issue_number`                                 | Select an issue number of a repository whose issue you want to transfer from       | `123`                        | String  | `false`  |
 | `target_issue_repo`                            | Select a repository with a username whose issue you want to transfer               | `username/reponame`          | String  | `true`   |
 | `target_issue_number`                          | Select an issue number                                                             | `123` [^target_issue_number] | String  | `true`   |
 | `personal_access_token`                        | Specify your personal access token name stored in your repository                  | `GH_TOKEN`                   | String  | `false`  |

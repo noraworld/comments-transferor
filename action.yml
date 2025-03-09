@@ -6,12 +6,20 @@ branding:
   color: blue
 
 inputs:
+  issue_repo:
+    description: Select a repository with a username whose issue you want to transfer from
+    required: true
+    default: ""
+  issue_number:
+    description: Select an issue number of a repository whose issue you want to transfer from
+    required: true
+    default: ""
   target_issue_repo:
-    description: Select a repository with a username whose issue you want to transfer
+    description: Select a repository with a username whose issue you want to transfer to
     required: true
     default: ""
   target_issue_number:
-    description: Select an issue number
+    description: Select an issue number of a repository whose issue you want to transfer to
     required: true
     default: ""
   personal_access_token:
@@ -67,7 +75,8 @@ runs:
       shell: sh
       env:
         GITHUB_TOKEN:                                 ${{ github.token }}
-        ISSUE_NUMBER:                                 ${{ github.event.issue.number }}
+        ISSUE_REPO:                                   ${{ inputs.issue_repo || github.repository }}
+        ISSUE_NUMBER:                                 ${{ inputs.issue_number || github.event.issue.number }}
         GITHUB_ACTION_PATH:                           ${{ github.action_path }}
         TARGET_ISSUE_REPO:                            ${{ inputs.target_issue_repo }}
         TARGET_ISSUE_NUMBER:                          ${{ inputs.target_issue_number }}

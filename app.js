@@ -124,8 +124,10 @@ function buildCommentBody(commentBody) {
 function getServiceName(commentBody) {
   // TODO: Mastodon
   const fromTwitterRegex = /From \[Twitter\]\(https:\/\/(twitter\.com|x\.com)\/[a-zA-Z0-9_]+\/status\/\d+\)\n?$/
+  const fromMisskeyRegex = /From \[Misskey\]\(https:\/\/misskey\.io\/notes\/[a-zA-Z0-9]+\)\n?$/
 
   if (fromTwitterRegex.test(commentBody)) return 'twitter'
+  if (fromMisskeyRegex.test(commentBody)) return 'misskey'
 }
 
 function replaceTwitterShortURL(commentBody) {
@@ -177,6 +179,11 @@ function linkifyMentions(commentBody) {
       return commentBody.replace(/@(\S+)/g, (_, mention) => {
         const encodedMention = encodeURIComponent(mention)
         return `[@${mention}](https://twitter.com/${encodedMention})`
+      })
+    case 'misskey':
+      return commentBody.replace(/(?<!`)(?:(?<=^)|(?<=\s))@([a-zA-Z0-9]+)(?=\s|$)(?!`)/g, (_, mention) => {
+        const encodedMention = encodeURIComponent(mention)
+        return `[@${mention}](https://misskey.io/@${encodedMention})`
       })
     default:
       return commentBody

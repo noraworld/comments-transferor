@@ -164,9 +164,16 @@ function trimEmptyImageTag(commentBody) {
 function linkifyHashtags(commentBody) {
   switch (getServiceName(commentBody)) {
     case 'twitter':
+      // TODO: regex is incomplete
       return commentBody.replace(/#(\S+)/g, (_, tag) => {
         const encodedTag = encodeURIComponent(tag)
         return `[#${tag}](https://twitter.com/hashtag/${encodedTag})`
+      })
+    case 'misskey':
+      // TODO: regex is incomplete
+      return commentBody.replace(/(?<!`)(?:(?<=^)|(?<=\s))#(\S+)(?=\s|$)(?!`)/g, (_, tag) => {
+        const encodedTag = encodeURIComponent(tag)
+        return `[#${tag}](https://misskey.io/tags/${encodedTag})`
       })
     default:
       return commentBody

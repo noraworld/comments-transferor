@@ -3,6 +3,8 @@
 import { Octokit } from '@octokit/rest'
 import fs from 'fs'
 import { execSync } from 'child_process'
+import { DateTime } from 'luxon'
+import * as chrono from 'chrono-node'
 
 const tmpFile = 'tmp.md'
 const spiltCommentsCheckAttemptsMaximum = 5
@@ -117,6 +119,7 @@ function buildCommentBody(commentBody) {
   commentBody = process.env.REMOVE_SPACES_AFTER_JAPANESE_PUNCTUATION     ?   removeSpacesAfterJapanesePunctuation(commentBody) : commentBody
   commentBody = process.env.TRIM_MISSKEY_PROFILE_ICON_URL                ?              trimMisskeyProfileIconUrl(commentBody) : commentBody
   commentBody = process.env.REPLACE_MISSKEY_IMAGE_URL_WITH_MULTIPLE_ONES ? replaceMisskeyImageUrlWithMultipleOnes(commentBody) : commentBody
+  commentBody = process.env.TIME_FORMAT_REPLACEMENT_REGEX && process.env.TIME_FORMAT ? formatDateTime(commentBody) : commentBody
 
   return commentBody
 }
@@ -218,6 +221,19 @@ function removeSpacesAfterJapanesePunctuation(commentBody) {
   return commentBody.replace(regex, (_, japanesePunctuation) => {
     return japanesePunctuation
   })
+}
+
+function formatDateTime(commentBody) {
+  const dateTimeRegex = new RegExp(process.env.TIME_FORMAT_REPLACEMENT_REGEX)
+  const naturalLanguageDateTime = dateTimeRegex.exec(commentBody)
+
+  if (!naturalLanguageDateTime) return commentBody
+
+  const parsed = chrono.parseDate(naturalLanguageDateTime[0])
+
+  if (!parsed) return commentBody
+
+  return commentBody.replace(dateTimeRegex, DateTime.fromJSDate(parsed).toFormat(process.env.TIME_FORMAT))
 }
 
 run().catch((error) => {

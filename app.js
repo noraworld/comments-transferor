@@ -174,7 +174,7 @@ function linkifyHashtags(commentBody) {
       })
     case 'misskey':
       // TODO: regex is incomplete
-      return commentBody.replace(/(?<!`)(?:(?<=^)|(?<=\s))#(\S+)(?=\s|$)(?!`)/g, (_, tag) => {
+      return commentBody.replace(/(?<!`)(?:(?<=^)|(?<=\s))(?:#+)([^\s#][^\s]*)(?=\s|$)(?!`)/g, (_, tag) => {
         const encodedTag = encodeURIComponent(tag)
         return `[#${tag}](https://misskey.io/tags/${encodedTag})`
       })

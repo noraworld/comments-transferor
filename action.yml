@@ -58,6 +58,14 @@ inputs:
     description: Specify whether to retrieve multiple images and replace the URL with multiple ones
     required: false
     default: ""
+  time_format_replacement_regex:
+    description:
+    required: false
+    default: ""
+  time_format:
+    description:
+    required: false
+    default: ""
 
 runs:
   using: "composite"
@@ -89,3 +97,5 @@ runs:
         REMOVE_SPACES_AFTER_JAPANESE_PUNCTUATION:     ${{ inputs.remove_spaces_after_japanese_punctuation }}
         TRIM_MISSKEY_PROFILE_ICON_URL:                ${{ inputs.trim_misskey_profile_icon_url }}
         REPLACE_MISSKEY_IMAGE_URL_WITH_MULTIPLE_ONES: ${{ inputs.replace_misskey_image_url_with_multiple_ones }}
+        TIME_FORMAT_REPLACEMENT_REGEX:                ${{ inputs.time_format_replacement_regex }}
+        TIME_FORMAT:                                  ${{ inputs.time_format }}
